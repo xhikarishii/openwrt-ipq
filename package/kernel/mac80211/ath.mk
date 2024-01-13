@@ -17,7 +17,8 @@ PKG_CONFIG_DEPENDS += \
 	CONFIG_ATH11K_MEM_PROFILE_1G \
 	CONFIG_ATH11K_MEM_PROFILE_512M \
 	CONFIG_ATH11K_MEM_PROFILE_256M \
-	CONFIG_ATH11K_NSS_SUPPORT
+	CONFIG_ATH11K_NSS_SUPPORT \
+	CONFIG_ATH11K_SMART_ANT_ALG
 
 ifdef CONFIG_PACKAGE_MAC80211_DEBUGFS
   config-y += \
@@ -64,6 +65,7 @@ config-$(CONFIG_ATH11K_MEM_PROFILE_1G) += ATH11K_MEM_PROFILE_1G
 config-$(CONFIG_ATH11K_MEM_PROFILE_512M) += ATH11K_MEM_PROFILE_512M
 config-$(CONFIG_ATH11K_MEM_PROFILE_256M) += ATH11K_MEM_PROFILE_256M
 config-$(CONFIG_ATH11K_NSS_SUPPORT) += ATH11K_NSS_SUPPORT
+config-$(CONFIG_ATH11K_SMART_ANT_ALG) += ATH11K_SMART_ANT_ALG
 
 config-$(call config_package,ath9k-htc) += ATH9K_HTC
 config-$(call config_package,ath10k) += ATH10K ATH10K_PCI
@@ -344,6 +346,11 @@ define KernelPackage/ath11k/config
                select NSS_DRV_WIFI_ENABLE
                select NSS_DRV_WIFI_EXT_VDEV_ENABLE
                default y if TARGET_qualcommax
+
+       config ATH11K_SMART_ANT_ALG
+               bool "Enable smart antenna"
+               depends on PACKAGE_MAC80211_DEBUGFS
+               default n
 
        choice
           prompt "ATH11K Memory Profile"
