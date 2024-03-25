@@ -91,6 +91,7 @@ apply_nss_config() {
   case "$board" in
     # 1GB+ profile
     arcadyan,aw1000 | \
+    asus,rt-ax89x | \
     buffalo,wxr-5950ax12 | \
     dynalink,dl-wrx36 | \
     edgecore,eap102 | \

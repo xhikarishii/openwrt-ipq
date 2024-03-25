@@ -54,6 +54,11 @@ platform_do_upgrade() {
 	netgear,wax630)
 		nand_do_upgrade "$1"
 		;;
+	asus,rt-ax89x)
+		CI_UBIPART="UBI_DEV"
+		CI_KERNPART="linux"
+		nand_do_upgrade "$1"
+		;;
 	buffalo,wxr-5950ax12)
 		CI_KERN_UBIPART="rootfs"
 		CI_ROOT_UBIPART="user_property"

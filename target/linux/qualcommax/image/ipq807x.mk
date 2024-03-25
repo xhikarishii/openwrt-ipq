@@ -22,6 +22,19 @@ define Device/arcadyan_aw1000
 endef
 TARGET_DEVICES += arcadyan_aw1000
 
+define Device/asus_rt-ax89x
+       $(call Device/FitImage)
+       $(call Device/UbiFit)
+       DEVICE_VENDOR := Asus
+	DEVICE_MODEL := RT-AX89X
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	DEVICE_DTS_CONFIG := config@hk01
+	SOC := ipq8074
+	DEVICE_PACKAGES := kmod-hwmon-gpiofan ipq-wifi-asus_rt-ax89x
+endef
+TARGET_DEVICES += asus_rt-ax89x
+
 define Device/buffalo_wxr-5950ax12
 	$(call Device/FitImage)
 	DEVICE_VENDOR := Buffalo
