@@ -15,7 +15,7 @@ PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL=$(PROJECT_GIT)/project/firewall3.git
 PKG_SOURCE_DATE:=2022-02-17
 PKG_SOURCE_VERSION:=4cd7d4f36bea731bf901cb067456f1d460294926
-PKG_MIRROR_HASH:=66a498164dc89251f34155a679186f090d9f1df104a4a63805f3231d0587e0c9
+PKG_MIRROR_HASH:=d48a1937328b4a46b4771839d7f281a0e95e024169caa02253fc216a0907d0b9
 PKG_MAINTAINER:=Jo-Philipp Wich <jo@mein.io>
 PKG_LICENSE:=ISC
 
@@ -30,9 +30,7 @@ define Package/firewall
   SECTION:=net
   CATEGORY:=Base system
   TITLE:=OpenWrt C Firewall
-  DEPENDS:=+libubox +libubus +libuci +libip4tc +IPV6:libip6tc +libiptext +IPV6:libiptext6 \
-  		+libxtables +kmod-ipt-core +kmod-ipt-conntrack +IPV6:kmod-nf-conntrack6 +kmod-ipt-nat \
-		+iptables-mod-fullconenat
+  DEPENDS:=+libubox +libubus +libuci +libip4tc +IPV6:libip6tc +libiptext +IPV6:libiptext6 +libxtables +kmod-ipt-core +kmod-ipt-conntrack +IPV6:kmod-nf-conntrack6 +kmod-ipt-nat
   PROVIDES:=uci-firewall
   CONFLICTS:=firewall4
 endef

@@ -6,10 +6,9 @@ PKG_RELEASE:=2
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL=$(PROJECT_GIT)/project/firmware/qca-wireless.git
-PKG_SOURCE_DATE:=2024-03-04
-PKG_SOURCE_VERSION:=38c02ae4302f9cb73f6914574239fe84799caa84
-PKG_MIRROR_HASH:=1e84f576d4161ea932b45a651abebdc05ff3c261ef25fc13d3d68cf9b624abb3
-
+PKG_SOURCE_DATE:=2024-03-20
+PKG_SOURCE_VERSION:=87717baa8a7c922942f4202a0ec3de3cb5643941
+PKG_MIRROR_HASH:=a88124db0cd9a386d2cbd905e48408e7131f057240bcc7da93f7c5fc10ea4892
 PKG_FLAGS:=nonshared
 
 include $(INCLUDE_DIR)/package.mk
@@ -53,6 +52,7 @@ ALLWIFIBOARDS:= \
 	xiaomi_ax9000 \
 	yyets_le1 \
 	yuncore_ax880 \
+	yuncore_fap650 \
 	zte_mf269 \
 	zte_mf287 \
 	zte_mf287plus \
@@ -171,6 +171,7 @@ $(eval $(call generate-ipq-wifi-package,xiaomi_ax3600,Xiaomi AX3600))
 $(eval $(call generate-ipq-wifi-package,xiaomi_ax9000,Xiaomi AX9000))
 $(eval $(call generate-ipq-wifi-package,yyets_le1,YYeTs LE1))
 $(eval $(call generate-ipq-wifi-package,yuncore_ax880,Yuncore AX880))
+$(eval $(call generate-ipq-wifi-package,yuncore_fap650,Yuncore FAP650))
 $(eval $(call generate-ipq-wifi-package,zte_mf269,ZTE MF269))
 $(eval $(call generate-ipq-wifi-package,zte_mf287,ZTE MF287))
 $(eval $(call generate-ipq-wifi-package,zte_mf287plus,ZTE MF287Plus))
