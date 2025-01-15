@@ -127,7 +127,7 @@ Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
  
 --- a/net/wireless/nl80211.c
 +++ b/net/wireless/nl80211.c
-@@ -18991,7 +18991,8 @@ void cfg80211_conn_failed(struct net_dev
+@@ -18996,7 +18996,8 @@ void cfg80211_conn_failed(struct net_dev
  EXPORT_SYMBOL(cfg80211_conn_failed);
  
  static bool __nl80211_unexpected_frame(struct net_device *dev, u8 cmd,
@@ -137,7 +137,7 @@ Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
  {
  	struct wireless_dev *wdev = dev->ieee80211_ptr;
  	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wdev->wiphy);
-@@ -19017,6 +19018,9 @@ static bool __nl80211_unexpected_frame(s
+@@ -19022,6 +19023,9 @@ static bool __nl80211_unexpected_frame(s
  	    nla_put(msg, NL80211_ATTR_MAC, ETH_ALEN, addr))
  		goto nla_put_failure;
  
@@ -147,7 +147,7 @@ Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
  	genlmsg_end(msg, hdr);
  	genlmsg_unicast(wiphy_net(&rdev->wiphy), msg, nlportid);
  	return true;
-@@ -19040,14 +19044,15 @@ bool cfg80211_rx_spurious_frame(struct n
+@@ -19045,14 +19049,15 @@ bool cfg80211_rx_spurious_frame(struct n
  		return false;
  	}
  	ret = __nl80211_unexpected_frame(dev, NL80211_CMD_UNEXPECTED_FRAME,
@@ -165,7 +165,7 @@ Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
  {
  	struct wireless_dev *wdev = dev->ieee80211_ptr;
  	bool ret;
-@@ -19062,7 +19067,7 @@ bool cfg80211_rx_unexpected_4addr_frame(
+@@ -19067,7 +19072,7 @@ bool cfg80211_rx_unexpected_4addr_frame(
  	}
  	ret = __nl80211_unexpected_frame(dev,
  					 NL80211_CMD_UNEXPECTED_4ADDR_FRAME,
@@ -176,7 +176,7 @@ Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
  }
 --- a/net/mac80211/chan.c
 +++ b/net/mac80211/chan.c
-@@ -1048,6 +1048,8 @@ __ieee80211_link_copy_chanctx_to_vlans(s
+@@ -1050,6 +1050,8 @@ __ieee80211_link_copy_chanctx_to_vlans(s
  	list_for_each_entry(vlan, &sdata->u.ap.vlans, u.vlan.list) {
  		struct ieee80211_bss_conf *vlan_conf;
  
@@ -185,7 +185,7 @@ Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
  		vlan_conf = wiphy_dereference(local->hw.wiphy,
  					      vlan->vif.link_conf[link_id]);
  		if (WARN_ON(!vlan_conf))
-@@ -1294,6 +1296,8 @@ ieee80211_link_update_chanreq(struct iee
+@@ -1296,6 +1298,8 @@ ieee80211_link_update_chanreq(struct iee
  	list_for_each_entry(vlan, &sdata->u.ap.vlans, u.vlan.list) {
  		struct ieee80211_bss_conf *vlan_conf;
  

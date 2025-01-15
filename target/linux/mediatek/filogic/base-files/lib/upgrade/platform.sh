@@ -76,6 +76,7 @@ platform_do_upgrade() {
 	jdcloud,re-cp-03|\
 	mediatek,mt7981-rfb|\
 	mediatek,mt7988a-rfb|\
+	mercusys,mr90x-v1-ubi|\
 	nokia,ea0326gmp|\
 	openwrt,one|\
 	netcore,n60|\
@@ -121,6 +122,11 @@ platform_do_upgrade() {
 	cudy,wr3000-v1|\
 	yuncore,ax835)
 		default_do_upgrade "$1"
+		;;
+	dlink,aquila-pro-ai-m30-a1|\
+	dlink,aquila-pro-ai-m60-a1)
+		fw_setenv sw_tryactive 0
+		nand_do_upgrade "$1"
 		;;
 	mercusys,mr90x-v1|\
 	tplink,re6000xd)

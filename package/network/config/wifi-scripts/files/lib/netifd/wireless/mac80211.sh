@@ -668,7 +668,7 @@ mac80211_set_ifname() {
 mac80211_prepare_vif() {
 	json_select config
 
-	json_get_vars ifname mode ssid wds powersave macaddr enable wpa_psk_file vlan_file
+	json_get_vars ifname mode ssid wds powersave macaddr enable wpa_psk_file sae_password_file vlan_file
 
 	[ -n "$ifname" ] || {
 		local prefix;
@@ -701,7 +701,12 @@ mac80211_prepare_vif() {
 
 
 	[ "$mode" == "ap" ] && {
+		json_select config
+		wireless_vif_parse_encryption
+		json_select ..
+
 		[ -z "$wpa_psk_file" ] && hostapd_set_psk "$ifname"
+		[ -z "$sae_password_file" ] && hostapd_set_sae "$ifname"
 		[ -z "$vlan_file" ] && hostapd_set_vlan "$ifname"
 	}
 
@@ -841,6 +846,11 @@ mac80211_setup_mesh() {
 	[ -n "$mcast_rate" ] && wpa_supplicant_add_rate mcval "$mcast_rate"
 	[ -n "$mesh_id" ] && ssid="$mesh_id"
 
+	brstr=
+	for br in $basic_rate_list; do
+		wpa_supplicant_add_rate brstr "$br"
+	done
+
 	local prev
 	json_set_namespace wdev_uc prev
 
@@ -851,6 +861,7 @@ mac80211_setup_mesh() {
 	json_add_string freq "$freq"
 	json_add_string htmode "$iw_htmode"
 	[ -n "$mcval" ] && json_add_string mcast-rate "$mcval"
+	[ -n "$brstr" ] && json_add_string basic-rates "$brstr"
 	json_add_int beacon-interval "$beacon_int"
 	mac80211_add_mesh_params
 
@@ -1017,7 +1028,7 @@ mac80211_setup_vif() {
 			json_get_vars $MP_CONFIG_INT $MP_CONFIG_BOOL $MP_CONFIG_STRING
 			wireless_vif_parse_encryption
 			[ -z "$htmode" ] && htmode="NOHT";
-			if wpa_supplicant -vmesh; then
+			if [ -x /usr/sbin/wpa_supplicant ] && wpa_supplicant -vmesh; then
 				mac80211_setup_supplicant || failed=1
 			else
 				mac80211_setup_mesh
@@ -1197,6 +1208,14 @@ drv_mac80211_setup() {
 	json_set_namespace wdev_uc prev
 	wdev_tool "$phy$phy_suffix" set_config "$(json_dump)" $active_ifnames
 	json_set_namespace "$prev"
+
+	[ -z "$phy_suffix" ] && {
+		if [ -n "$txpower" ]; then
+			iw phy "$phy" set txpower fixed "${txpower%%.*}00"
+		else
+			iw phy "$phy" set txpower auto
+		fi
+	}
 
 	for_each_interface "ap sta adhoc mesh monitor" mac80211_set_vif_txpower
 	wireless_set_up

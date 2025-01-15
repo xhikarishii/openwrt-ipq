@@ -40,7 +40,7 @@ Signed-off-by: Sowmiya Sree Elavalagan <ssreeela@codeaurora.org>
  
  extern const struct cfg80211_ops mac80211_config_ops;
  
-@@ -1186,6 +1189,9 @@ struct ieee80211_sub_if_data {
+@@ -1184,6 +1187,9 @@ struct ieee80211_sub_if_data {
  		struct dentry *default_beacon_key;
  	} debugfs;
  #endif
