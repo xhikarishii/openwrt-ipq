@@ -102,6 +102,17 @@
 		qcom,wlan-dataplane-offload-enabled;
 		qcom,vlan-enabled;
 		qcom,igs-enabled;
+		/*
+		 * rmnet_rx lives here rather than on nss1 so the cellular uplink is
+		 * visible to the shaper. nss_cmn_get_interface_number(), which the NSS
+		 * qdisc uses to resolve a netdev, searches only the shaping core's own
+		 * registration table - so with rmnet on nss1 every qdisc add on the QMAP
+		 * child failed with "interface unknown to nss driver". The driver treats
+		 * this as the better placement anyway: nss_rmnet_rx_create() sends host
+		 * to NSS packets straight to NSS_ETH_RX_INTERFACE when rmnet and eth_rx
+		 * share a core, instead of routing them over C2C.
+		 */
+		qcom,rmnet_rx-enabled;
 		qcom,vxlan-enabled;
 		qcom,match-enabled;
 		qcom,mirror-enabled;
@@ -176,7 +187,6 @@
 		qcom,qvpn-enabled;
 		qcom,pvxlan-enabled;
 		qcom,clmap-enabled;
-		qcom,rmnet_rx-enabled;
 	};
 
 	nss_crypto: qcom,nss_crypto {
