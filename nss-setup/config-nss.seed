@@ -134,6 +134,19 @@ CONFIG_OPENSSL_OPTIMIZE_SPEED=y
 #####################################################################
 # Enable WPA3 and Mesh support
 CONFIG_PACKAGE_wpad-mesh-openssl=y
+# ATH11K_NSS_MESH_SUPPORT above selects PACKAGE_MAC80211_MESH and
+# kmod-qca-nss-drv-wifi-meshmgr through ath.mk, but the NSS driver-side mesh
+# service and the firmware profile that implements it have to be asked for. Only
+# NSS.HK.11.4.0.5 implements mesh offload - on 12.1, 12.2 or 12.5 the mesh still
+# forms and forwards, in software, and says nothing about it.
+CONFIG_PACKAGE_MAC80211_MESH=y
+CONFIG_NSS_DRV_WIFI_MESH_ENABLE=y
+CONFIG_PACKAGE_kmod-qca-nss-drv-wifi-meshmgr=y
+CONFIG_NSS_FIRMWARE_VERSION_11_4=y
+# The only honest test of whether a mesh vdev is offloaded rather than merely
+# working is a debugfs directory, and ATH11K_NSS_MESH_SUPPORT does not select
+# this for you.
+CONFIG_PACKAGE_MAC80211_DEBUGFS=y
 # Avoid using mbedTLS for consistency across packages and to avoid mixed SSL libraries.
 CONFIG_PACKAGE_wpad-basic-mbedtls=n
 
